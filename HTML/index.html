@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      background-color: #ccc;
+    }
+
+    .calculator {
+      width: 300px;
+      background-color: #333;
+      margin: 50px auto;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .display-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: white;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      padding: 5px; position: relative;
+    }
+
+    .clear-button {
+      background-color: #1e9f92; /* Green */
+      color:white;
+      width: 78px; /* Adjust the width for rectangular shape */
+      height: 90px;
+      font-size: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      border-radius: 3px; /* Make it rectangular */
+      position: absolute;
+      top: 1px;
+      right: 0; /* Adjust the position */  }
+
+.display {
+  width: calc(100% - 80px); /* Adjust width to accommodate the rectangular button */
+  height: 50px;
+  font-size: 24px;
+  text-align: left;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}  .button {
+      background-color: #000;
+      color: white;
+      font-size: 18px;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .button.green {
+      background-color: #2E8B57; /* Green */
+    }
+
+    .button.grey {
+      background-color: #666;
+    }.button.orange {
+      background-color: orange;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div class="display-container">
+      <div class="display" id="display">0</div>
+      <div class="clear-button" onclick="clearDisplay()">AC</div>
+    </div>
+    <div class="buttons">
+      <div class="button" onclick="appendToDisplay('9')">9</div>
+      <div class="button" onclick="appendToDisplay('8')">8</div>
+      <div class="button" onclick="appendToDisplay('7')">7</div>
+      <div class="button grey" onclick="appendToDisplay('+')">+</div>
+      <div class="button" onclick="appendToDisplay('4')">4</div>
+      <div class="button" onclick="appendToDisplay('5')">5</div>  <div class="button" onclick="appendToDisplay('6')">6</div>
+      <div class="button grey" onclick="appendToDisplay('-')">-</div>
+      <div class="button" onclick="appendToDisplay('1')">1</div>
+      <div class="button" onclick="appendToDisplay('2')">2</div>
+      <div class="button" onclick="appendToDisplay('3')">3</div>
+      <div class="button grey" onclick="appendToDisplay('/')">/</div>
+      <div class="button" onclick="appendToDisplay('.')">.</div>
+      <div class="button" onclick="appendToDisplay('0')">0</div>
+      <div class="button" onclick="calculate()" class="orange">=</div>
+      <div class="button grey" onclick="appendToDisplay('*')">*</div>
+    </div>
+  </div>
+
+  <script>
+    let display = document.getElementById('display');
+    let currentInput = '';
+    function appendToDisplay(value) {
+      currentInput += value;
+      display.textContent = currentInput;
+    }
+
+    function clearDisplay() {
+      currentInput = '';
+      display.textContent = '0';
+    }
+
+    function calculate() {
+      try {
+        currentInput = eval(currentInput);
+        display.textContent = currentInput;
+      } catch (errror) {
+        display.textContent = 'Error';
+      }
+    }
+  </script>
+</body>
+</html>

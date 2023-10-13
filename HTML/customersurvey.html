@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: #0095ffc1;
+            font-family: Arial, sans-serif;
+        }
+
+        .form-container {
+            background-color: white;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-field {
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            color: white;
+        }
+
+        #submit-popup {
+            display: none;
+            background-color: white;
+            max-width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        #submit-popup label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<h2> Customer Survey Form</h2>
+<body>
+    <div class="form-container">
+        <form id="survey-form">
+            <div class="form-field">
+                <label for="first-name">First Name:</label>
+                <input type="text" id="first-name" required>
+            </div>
+            <div class="form-field">
+                <label for="last-name">Last Name:</label>
+                <input type="text" id="last-name" required>
+            </div>
+            <div class="form-field">
+                <label for="date-of-birth">Date of Birth:</label>
+                <input type="date" id="date-of-birth" required>
+            </div>
+            <div class="form-field">
+                <label for="country">Country:</label>
+                <select id="country" required>
+                    <option value="select">select</option>
+                    <option value="India">India</option>
+                    <option value="USA">USA</option>
+                    <option value="UK">UK</option>
+                    <option value="Australia">Australia</option>
+                    <option value="Canada">Canada</option>
+                    <!-- Add more countries here -->
+                </select>
+            </div>
+            <div class="form-field">
+                <label>Gender:</label>
+                <input type="checkbox" id="male" name="gender" value="Male"> Male
+                <input type="checkbox" id="female" name="gender" value="Female"> Female
+            </div>
+            <div class="form-field">
+                <label for="profession">Profession:</label>
+                <input type="text" id="profession" required>
+            </div>
+            <div class="form-field">
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-field">
+                <label for="mobile-number">Mobile Number:</label>
+                <input type="tel" id="mobile-number" required>
+            </div>
+            <div class="form-field">
+                <input type="button" value="Submit" onclick="showPopup()">
+                <input type="reset" value="Reset">
+            </div>
+        </form>
+    </div>
+
+    <div id="submit-popup">
+        <h2>Form Submitted</h2>
+        <div id="popup-content">
+        </div>
+        <button onclick="closePopup()">Close</button>
+    </div>
+
+    <script>
+        function showPopup() {
+            const popup = document.getElementById("submit-popup");
+            const content = document.getElementById("popup-content");
+            const form = document.getElementById("survey-form");
+            content.innerHTML = "";
+
+            if (form.checkValidity()) {
+                content.innerHTML += `<label>First Name:</label> ${document.getElementById("first-name").value}<br>`;
+                content.innerHTML += `<label>Last Name:</label> ${document.getElementById("last-name").value}<br>`;
+                content.innerHTML += `<label>Date of Birth:</label> ${document.getElementById("date-of-birth").value}<br>`;
+                content.innerHTML += `<label>Country:</label> ${document.getElementById("country").value}<br>`;
+
+                const genders = document.querySelectorAll('input[name="gender"]:checked');
+                if (genders.length > 0) {
+                    content.innerHTML += "<label>Gender:</label>";
+                    genders.forEach(gender => {
+                        content.innerHTML += ` ${gender.value}`;
+                    });
+                    content.innerHTML += "<br>";
+                }
+
+                content.innerHTML += `<label>Profession:</label> ${document.getElementById("profession").value}<br>`;
+                content.innerHTML += `<label>Email:</label> ${document.getElementById("email").value}<br>`;
+                
+                const mobileNumber = document.getElementById("mobile-number").value;
+                if (isValidMobileNumber(mobileNumber)) {
+                    content.innerHTML += `<label>Mobile Number:</label> ${mobileNumber}<br>`;
+                    popup.style.display = "block";
+                } else {
+                    alert("Please enter a valid 10-digit mobile number.");
+                }
+            } else {
+                alert("Please fill in all required fields.");
+            }
+        }
+
+        function isValidMobileNumber(mobileNumber) {
+            // Use a regular expression to validate a 10-digit mobile number
+            const mobileNumberPattern = /^\d{10}$/;
+            return mobileNumberPattern.test(mobileNumber);
+        }
+
+        function closePopup() {
+            const popup = document.getElementById("submit-popup");
+            popup.style.display = "none";
+
+            // Reset the form
+            document.getElementById("survey-form").reset();
+        }
+    </script>
+</body>
+</html>
