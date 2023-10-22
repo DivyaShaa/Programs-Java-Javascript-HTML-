@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <div class="code-editor">
+    <div class="editor-toolbar">
+      <button id="copy-button">Copy</button>
+      <button id="save-button">Save</button>
+      <button id="lock-button">Lock</button>
+    </div>
+    <div class="editor-content" contenteditable="true">
+      // Your code goes here...
+    </div>
+  </div>
+  <script src="script.js"></script>
+
+<style>
+.code-editor {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  max-width: 600px;
+}
+
+.editor-toolbar {
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+}
+
+.editor-toolbar button {
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.editor-content {
+  font-family: monospace;
+  padding: 10px;
+  white-space: pre;
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const copyButton = document.getElementById('copy-button');
+    const saveButton = document.getElementById('save-button');
+    const lockButton = document.getElementById('lock-button');
+    const editorContent = document.querySelector('.editor-content');
+  
+    let isLocked = false;
+  
+    copyButton.addEventListener('click', function () {
+      if (!isLocked) {
+        const code = editorContent.innerText;
+        navigator.clipboard.writeText(code).then(function () {
+          alert('Code copied to clipboard!');
+        }).catch(function (error) {
+          console.error('Failed to copy code:', error);
+        });
+      }
+    });
+  
+    saveButton.addEventListener('click', function () {
+      if (!isLocked) {
+        // Save code to your server or storage here.
+        alert('Code saved!');
+      }
+    });
+  
+    lockButton.addEventListener('click', function () {
+      isLocked = !isLocked;
+      if (isLocked) {
+        lockButton.innerText = 'Unlock';
+        editorContent.contentEditable = 'false';
+      } else {
+        lockButton.innerText = 'Lock';
+        editorContent.contentEditable = 'true';
+      }
+    });
+  });
+  
+  </script>
+</body>
+
+</html>
